@@ -1,10 +1,17 @@
+/*****Project: Optimisation in AI***/
+/*****A Simple Genetic Algorthm that evolves over successive generations***/
+/*****Code Created By: Etinosa Murphy Obanor***/
+/*****Date:30th Sept 2015*****/
+/**************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #define NUMBER_ORGANISMS 100
 #define NUMBER_GENES 10
-#define NUMBER_GENERATIONS 10
 
+
+//Global definitions of variables and functions
 int CURRENT_ORGANISM;
 int CURRENT_GENE;
 	typedef struct{
@@ -14,12 +21,11 @@ int CURRENT_GENE;
 int fit_total;
 int fit_total2;
 int final_fitness;
-int compFunc();
-int funcEval();
-int func2Eval();
+int compFunc(); //Comparison for sort function
 
 int main(){
 	
+	//Assign organisms and genes to more concise variable names
 	int P = NUMBER_ORGANISMS;
     int N = NUMBER_GENES;
 
@@ -29,11 +35,11 @@ int main(){
 
    
    	    /*******Initialisation of the Population********/
-        for (CURRENT_ORGANISM = 0; CURRENT_ORGANISM<P; CURRENT_ORGANISM++){
-		for (CURRENT_GENE = 0; CURRENT_GENE<N; CURRENT_GENE++){
-			population[CURRENT_ORGANISM].gene[CURRENT_GENE] = rand() % N;
-		}
-		population[CURRENT_ORGANISM].fitness = 0;
+        for (CURRENT_ORGANISM = 0; CURRENT_ORGANISM<P; CURRENT_ORGANISM++){ //Loop through the population
+		  for (CURRENT_GENE = 0; CURRENT_GENE<N; CURRENT_GENE++){ 
+			population[CURRENT_ORGANISM].gene[CURRENT_GENE] = rand() % N; //Assign random numbers / Genes to gene
+		} 
+		population[CURRENT_ORGANISM].fitness = 0;  //initialise the population fitness
 	}
 
 	for (CURRENT_ORGANISM = 0; CURRENT_ORGANISM<P; CURRENT_ORGANISM++){
@@ -97,7 +103,7 @@ int main(){
 			       offSpring[CURRENT_ORGANISM].fitness++;
 			     }
 			   }
-			      
+			  printf("After Crossover:%d\n", offSpring[CURRENT_ORGANISM].fitness);    
 	       
 	             /***********Mutation**********/
 	       //define 6 integer masks to perform the bit flip
@@ -117,26 +123,7 @@ int main(){
 			     }
 			     
 			   }
-            
-            int x = offSpring[CURRENT_ORGANISM].fitness;
-            int y = offSpring[CURRENT_ORGANISM+1].fitness;
-
-             if ((y<=15)&&(y>=-15)){
-			 	printf("Function Result2:%d\n",func2Eval(x,y));
-               }else{
-               	
-               }
-			 
-			 if((x<=255 )&&(x>=0)){
-			 	
-			 	printf("Function Result:%d\n",funcEval(x));
-			 }else{
-
-			 }
-
-
-
-       
+			 	printf("Mutated Fitness:%d\n", offSpring[CURRENT_ORGANISM].fitness);
 
      }
 
@@ -146,13 +133,4 @@ int main(){
 int compFunc (const void * a, const void * b)
 {
    return ( *(int*)a - *(int*)b );
-}
-
-//Function F(x) = X^2 
-int funcEval(x){
-return x^2;	
-}
-
-int func2Eval(x,y){
-return 0.26*(x^2 + y^2) - (0.48)*(x * y);
 }
